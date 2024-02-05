@@ -15,14 +15,11 @@
     "bootstrap": "^5.3.2",
     "bootstrap-vue-next": "^0.15.5",
     "gh-pages": "^6.1.1",
-    "html2pdf.js": "^0.10.1",
-    "html3pdf": "^0.12.2",
     "paperizer": "^0.1.6",
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
     "vue-multiselect": "next",
     "vue-router": "4",
-    "vue3-html2pdf": "^1.1.2",
     "vue3-print-nb": "^0.1.4"
   },
   "devDependencies": {
