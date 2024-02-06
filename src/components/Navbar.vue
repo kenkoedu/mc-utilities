@@ -2,7 +2,7 @@
   <BNavbar>
     <BNavbarBrand>Mathematics</BNavbarBrand>
     <BNavbarNav>
-      <RouterLink to="/mc-utilities /by-topic">
+      <RouterLink to="/mc-utilities/by-topic">
         <BNavItem>
           All By Topic
         </BNavItem>

@@ -6,7 +6,7 @@
         <BRow class="m-0 p-0">
           <BCol cols="9" class="m-0 p-0">
             <BImg
-              :src="'src/assets/questions/' + question.id + store.lang + '.png'"
+              :src="getImgUrl(question.id.toString(), store.lang)"
               class="m-0 p-0"
               style="object-position: 0 -10px;" fluid />
           </BCol>
@@ -38,6 +38,8 @@ const store = useSettingsStore()
 const props = defineProps(['question', 'showAns'])
 const question = ref<Tables<'mc_questions'>>(props.question)
 const showAns = ref<boolean>(props['showAns'] && true)
+
+const getImgUrl = (id: string, lang: 'e' | 'c') => new URL(`../assets/questions/${id}${lang}.png`, import.meta.url).href
 </script>
 
 <style scoped></style>
