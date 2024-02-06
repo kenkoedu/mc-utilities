@@ -2,12 +2,12 @@
   <BNavbar>
     <BNavbarBrand>Mathematics</BNavbarBrand>
     <BNavbarNav>
-      <RouterLink to="/by-topic">
+      <RouterLink to="/mc-utilities /by-topic">
         <BNavItem>
           All By Topic
         </BNavItem>
       </RouterLink>
-      <RouterLink to="/ex-editor">
+      <RouterLink to="/mc-utilities/ex-editor">
         <BNavItem>
           Exercise Editor
         </BNavItem>
