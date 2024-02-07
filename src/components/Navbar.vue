@@ -1,5 +1,5 @@
 <template>
-  <BNavbar>
+  <BNavbar variant="light">
     <BNavbarBrand>Mathematics</BNavbarBrand>
     <BNavbarNav>
       <RouterLink to="/mc-utilities/by-topic">
@@ -16,8 +16,15 @@
 
       </BNavItem>
     </BNavbarNav>
+    <BFormCheckbox switch>Show Answer</BFormCheckbox>
+    <BFormCheckbox switch>Show %</BFormCheckbox>
     <BNavbarNav class="ms-auto mb-2 mb-lg-0">
-      <BNavItemDropdown text="🌐" right>
+      <!-- <IMdiLanguage></IMdiLanguage> -->
+
+      <BNavItemDropdown right>
+        <template #button-content>
+          <IMdiLanguage></IMdiLanguage>
+        </template>
         <BDropdownItem @click="setLang('e')">English
         </BDropdownItem>
         <BDropdownItem @click="setLang('c')">中文
