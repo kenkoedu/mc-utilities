@@ -1,16 +1,16 @@
 <template>
-  <BCard :key="question.id" style="page-break-inside: avoid;"
+  <BCard :key="question.id"
+    style="page-break-inside: avoid; min-width: 750px"
     class="m-0 p-0">
     <BCardBody class="m-0 p-0">
       <BContainer fluid class="m-0 p-0">
         <BRow class="m-0 p-0">
-          <BCol cols="9" class="m-0 p-0">
+          <BCol md="12" lg="9" class="m-0 p-0">
             <BImg
-              :src="getImgUrl(question.id.toString(), store.lang)"
-              class="m-0 p-0"
-              style="object-position: 0 -10px;" fluid />
+              :src="getImgUrl(question.id.toString(), settings.lang)"
+              class="m-0 p-0" style="min-width: 718px;" />
           </BCol>
-          <BCol cols="3">
+          <BCol md="4" lg="3" class="mt-2">
             <BListGroup>
               <BListGroupItem>
                 {{ question.year }} Q{{ question.q_num }}
@@ -18,7 +18,7 @@
               <BListGroupItem>
                 Hong Kong: {{ question.hk_percent }}%
               </BListGroupItem>
-              <BListGroupItem v-if="showAns">
+              <BListGroupItem v-if="settings.showAns">
                 Answer: {{ question.ans }}
               </BListGroupItem>
             </BListGroup>
@@ -34,10 +34,10 @@ import { ref } from 'vue';
 import { Tables } from "../db/types"
 import { useSettingsStore } from '../store';
 
-const store = useSettingsStore()
-const props = defineProps(['question', 'showAns'])
+const settings = useSettingsStore()
+const props = defineProps(['question'])
 const question = ref<Tables<'mc_questions'>>(props.question)
-const showAns = ref<boolean>(props['showAns'] && true)
+// const showAns = ref<boolean>(props['showAns'] && true)
 
 const getImgUrl = (id: string, lang: 'e' | 'c') => new URL(`../assets/questions/${id}${lang}.png`, import.meta.url).href
 </script>

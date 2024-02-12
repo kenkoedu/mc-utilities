@@ -1,10 +1,10 @@
 <template>
-  <BContainer v-if="topics.length"
+  <BContainer fluid="md" v-if="topics.length"
     v-for="(questionsByTopic, t_id) in questionsByTopics"
     :key="t_id" style="page-break-after: always;">
     <h5>{{ t_id }}. {{ getTopicName(t_id) }}</h5>
     <QuestionCard v-for="(question, i) of questionsByTopic"
-      :key="i" :question="question" :show-ans="true">
+      :key="i" :question="question">
     </QuestionCard>
   </BContainer>
 </template>
