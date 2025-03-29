@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "vue-router"
 import ByTopic from '@/pages/ByTopic.vue'; // Updated import
 import ExerciseSelector from '@/pages/ExerciseSelector.vue'; // Updated import
 import ByYear from '@/pages/ByYear.vue'; // Updated import
-import path from "path";
 
 const Home = { template: '<div>Home</div>' }
 
