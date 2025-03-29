@@ -75,7 +75,7 @@ const options = computed(() =>
     text: a.t_id + '. ' + (settings.lang == 'e' ? a.t_title : a.t_title_c),
   }))
 );
-const topicsSelected = ref<{ value: number }[]>([]);
+const topicsSelected = ref<{ value: number, text: string }[]>([]);
 
 const getTopics = async (): Promise<Topic[]> => {
   const response = await fetch('/api/topics');
