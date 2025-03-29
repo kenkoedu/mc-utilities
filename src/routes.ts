@@ -16,6 +16,7 @@ const routes = [
       { path: '/by-year', component: ByYear }
     ]
   },
+  { path: '/:pathMatch(.*)', component: Home }
 ]
 
 const router = createRouter({
