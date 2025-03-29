@@ -7,12 +7,8 @@ import Navbar from './components/Navbar.vue';
 
 <template>
   <Navbar class="no-print"></Navbar>
-  <BContainer fluid>
+  <BContainer fluid class="main-container">
     <RouterView></RouterView>
-    <!-- <ExerciseSelector></ExerciseSelector> -->
-    <!-- <ByTopic></ByTopic> -->
-    <!-- <StudentReport></StudentReport> -->
-    <!-- <StudentReport></StudentReport> -->
   </BContainer>
 </template>
 
@@ -20,6 +16,18 @@ import Navbar from './components/Navbar.vue';
 @media print {
   .no-print {
     display: none !important;
+  }
+}
+
+.main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1440px) {
+  .main-container {
+    max-width: 100%;
+    padding: 0 1rem;
   }
 }
 </style>

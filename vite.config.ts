@@ -2,8 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import Components from 'unplugin-vue-components/vite'
 import { BootstrapVueNextResolver } from 'unplugin-vue-components/resolvers'
-import Icons from 'unplugin-icons/vite'
-import IconsResolve from 'unplugin-icons/resolver'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,13 +9,32 @@ export default defineConfig({
   // assetsInclude: ['assets/questions/*.png'], 
   plugins: [vue(),
   Components({
-    resolvers: [IconsResolve(),
-    BootstrapVueNextResolver()],
+    resolvers: [
+      BootstrapVueNextResolver()],
     dts: true,
   }),
-  Icons({
-    compiler: 'vue3',
-    autoInstall: true,
-  }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: './index.html',
+        backend: './src/api/index.ts'
+      },
+      output: {
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name]-[hash].js',
+        assetFileNames: '[name]-[hash].[ext]'
+      }
+    }
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: process.env.VITE_BACKEND_URL || 'http://localhost:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+        ws: true,
+      }
+    }
+  }
 })

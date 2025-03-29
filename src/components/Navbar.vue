@@ -6,14 +6,28 @@
       <BNavbarNav>
         <RouterLink to="/mc-utilities/by-topic">
           <BNavItem>
-            All By Topic
+            <ListIcon class="me-1" />
+            {{ allByTopicText }}
+          </BNavItem>
+        </RouterLink>
+        <RouterLink to="/mc-utilities/by-year">
+          <BNavItem>
+            <Calendar class="me-1" />
+            {{ allByYearText }}
           </BNavItem>
         </RouterLink>
         <RouterLink to="/mc-utilities/ex-editor">
           <BNavItem>
-            Exercise Editor
+            <PencilIcon class="me-1" />
+            {{ exerciseEditorText }}
           </BNavItem>
         </RouterLink>
+        <!-- <RouterLink to="/mc-utilities/db-viewer">
+          <BNavItem>
+            <DatabaseIcon class="me-1" />
+            {{ dbViewerText }}
+          </BNavItem>
+        </RouterLink> -->
         <BNavItem>
         </BNavItem>
       </BNavbarNav>
@@ -31,7 +45,8 @@
         </BNavForm>
         <BNavItemDropdown right class="mx-2">
           <template #button-content>
-            <IMdiLanguage></IMdiLanguage>
+            <GlobeIcon class="me-1" />
+            {{ settings.lang === 'e' ? 'English' : '中文' }}
           </template>
           <BDropdownItem @click="setLang('e')">English
           </BDropdownItem>
@@ -45,7 +60,9 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from '../store';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+// import { ListIcon, PencilIcon, DatabaseIcon, GlobeIcon, Calendar } from 'lucide-vue-next';
+import { ListIcon, PencilIcon, GlobeIcon, Calendar } from 'lucide-vue-next';
 
 const settings = useSettingsStore()
 const showAns = ref<boolean>(true)
@@ -53,12 +70,28 @@ const showHKPercent = ref<boolean>(true)
 const setLang = (lang: 'e' | 'c') => {
   settings.lang = lang
 }
-const setShowAns = (showAns: boolean) => {
-  settings.showAns = showAns
+const setShowAns = () => {
+  settings.showAns = showAns.value
 }
-const setShowHKPercent = (showHKPercent: boolean) => {
-  settings.showHKPercent = showHKPercent
+const setShowHKPercent = () => {
+  settings.showHKPercent = showHKPercent.value
 }
+
+const allByTopicText = computed(() => {
+  return settings.lang === 'c' ? '按課題' : 'All By Topic'
+})
+
+const allByYearText = computed(() => {
+  return settings.lang === 'c' ? '按年份' : 'All By Year'
+})
+
+const exerciseEditorText = computed(() => {
+  return settings.lang === 'c' ? '製作工作紙' : 'Exercise Editor'
+})
+
+// const dbViewerText = computed(() => {
+//   return settings.lang === 'c' ? '檢視資料庫' : 'DB Viewer'
+// })
 </script>
 
 <style scoped></style>

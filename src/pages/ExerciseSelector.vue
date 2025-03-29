@@ -1,20 +1,38 @@
 <template>
   <BContainer fluid>
     <BForm class="no-print">
-      <BFormGroup label="Categories" label-cols-lg="2"
-        label-cols-md="4" class="my-1">
+      <BFormGroup
+        :label="settings.lang == 'e' ? 'Topics' : '課題'"
+        label-cols-lg="2" label-cols-md="4" class="my-1">
         <VueMultiselect v-if="topics.length"
           v-model="topicsSelected" :options="options"
           :close-on-select="false" :multiple="true"
           label="text" track-by="text" />
       </BFormGroup>
-      <BFormGroup label="Exercise Name" label-cols-lg="2"
-        label-cols-md="4" class="my-1">
+      <BFormGroup
+        :label="settings.lang == 'e' ? 'Exercise Name' : '練習名稱'"
+        label-cols-lg="
+        2" label-cols-md="4" class="my-1">
         <BFormInput v-model="exName"></BFormInput>
       </BFormGroup>
-      <BFormGroup label="Instructions" label-cols-lg="2"
-        label-cols-md="4" class="my-1">
-        <BFormTextarea v-model="instructions"></BFormTextarea>
+      <BFormGroup
+        :label="settings.lang == 'e' ? 'Instructions' : '練習指示'"
+        label-cols-lg="2" label-cols-md="4" class="my-1">
+        <BFormTextarea v-model="instructions">
+        </BFormTextarea>
+      </BFormGroup>
+      <BFormGroup
+        :label="settings.lang == 'e' ? 'Sort Method' : '排序方法'"
+        label-cols-lg="2" label-cols-md="4" class="my-1">
+        <BFormSelect v-model="sortMethod">
+          <BFormSelectOption value="">
+            {{ settings.lang == 'e' ? 'Default' : '預設' }}
+          </BFormSelectOption>
+          <BFormSelectOption value="hk_percent">
+            {{ settings.lang == 'e' ? 'From the easiest' :
+              '最易至最難' }}
+          </BFormSelectOption>
+        </BFormSelect>
       </BFormGroup>
     </BForm>
     <h3 class="my-3">{{ exName }}</h3>
@@ -31,33 +49,50 @@
       <BCol cols="3">Date: __________</BCol>
     </BRow>
     <div v-for="(topic, i) of topicsSelected" :key="i">
-      <h5 style="page-break-after: avoid;">
-        {{ topic.value.id }}. {{ topic.value.t_title }}
-      </h5>
-      <TopicQuestions :t-id="topic.value.id"
-        :is-review="false" :show-ans="false"
-        :key="topicsSelected.length" />
+      <!-- <h5 style="page-break-after: avoid;">
+        {{ topic.text }}
+      </h5> -->
+      <TopicQuestions :t-id="topic.value" :is-review="false"
+        :show-ans="false" :sort-method="sortMethod"
+        :topicTitle="topic.text"
+        :key="topicsSelected.length + sortMethod" />
     </div>
   </BContainer>
 </template>
 
 <script setup lang="ts">
-import { getTopics } from '../db/db';
 import { onBeforeMount, ref, computed } from 'vue';
-import VueMultiselect from 'vue-multiselect'
-import { Tables } from '../db/types';
-const topics = ref<Tables<"mc_topics">[]>([])
-const options = computed(() => topics.value.map(a => ({
-  value: a,
-  text: a.id + ". " + a.t_title
-})))
-const topicsSelected = ref<{ value: any }[]>([])
-onBeforeMount(async () => {
-  topics.value = await getTopics()
-})
+import VueMultiselect from 'vue-multiselect';
+import { useSettingsStore } from '../store';
+import { Topic } from '../../type';
 
-const exName = ref("")
-const instructions = ref("")
+const settings = useSettingsStore();
+
+const topics = ref<Topic[]>([]);
+const options = computed(() =>
+  topics.value.map((a) => ({
+    value: a.t_id,
+    text: a.t_id + '. ' + (settings.lang == 'e' ? a.t_title : a.t_title_c),
+  }))
+);
+const topicsSelected = ref<{ value: number }[]>([]);
+
+const getTopics = async (): Promise<Topic[]> => {
+  const response = await fetch('/api/topics');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  return await response.json();
+};
+
+onBeforeMount(async () => {
+  topics.value = await getTopics();
+});
+
+const exName = ref<string>('');
+const instructions = ref<string>('');
+const sortMethod = ref<string>('');
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.css"></style>  
+<style
+  src="vue-multiselect/dist/vue-multiselect.css"></style>
