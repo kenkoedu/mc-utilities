@@ -15,8 +15,7 @@ const routes = [
       { path: '/ex-editor', component: ExerciseSelector },
       { path: '/by-year', component: ByYear }
     ]
-  },
-  { path: '/:pathMatch(.*)', component: Home }
+  }
 ]
 
 const router = createRouter({
