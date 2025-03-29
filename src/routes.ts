@@ -2,20 +2,16 @@ import { createRouter, createWebHistory } from "vue-router"
 import ByTopic from '@/pages/ByTopic.vue'; // Updated import
 import ExerciseSelector from '@/pages/ExerciseSelector.vue'; // Updated import
 import ByYear from '@/pages/ByYear.vue'; // Updated import
+import path from "path";
 
 const Home = { template: '<div>Home</div>' }
 
 const routes = [
   { path: '/', component: Home },
-  {
-    path: '/mc-utilities',
-    component: Home,
-    children: [
-      { path: '/by-topic', component: ByTopic },
-      { path: '/ex-editor', component: ExerciseSelector },
-      { path: '/by-year', component: ByYear }
-    ]
-  }
+  { path: 'mc-utilities/by-topic', component: ByTopic },
+  { path: 'mc-utilities/ex-editor', component: ExerciseSelector },
+  { path: 'mc-utilities/by-year', component: ByYear },
+  { path: '/:pathMatch(.*)*', redirect: '/' } // Redirect all unmatched paths to home
 ]
 
 const router = createRouter({
