@@ -45,9 +45,6 @@ jobs:
       - name: Build
         # run: npm run build
         run: bunx --bun vite build
-        env:
-          VITE_SUPABASE_KEY: ${{secrets.VITE_SUPABASE_KEY}}
-          VITE_SUPABASE_ADMIN_KEY: ${{secrets.VITE_SUPABASE_ADMIN_KEY}}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
