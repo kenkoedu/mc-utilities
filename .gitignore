@@ -26,5 +26,5 @@ dist-ssr
 .env
 .dist
 .dist/*
-.exclude
-.exclude/*
+exclude
+exclude/*

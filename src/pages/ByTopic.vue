@@ -4,72 +4,75 @@
   <div class="d-flex mb-3">
     <div class="me-3">
       <label for="topic-sort">{{ settings.lang == "e" ?
-        "Topics Sort by:" :
-        "課題排序：" }}</label>
-      <BFormSelect id="topic-sort" v-model="topicSortMethod"
-        @input="updateTopicSortMethod">
-        <BFormSelectOption value="">{{ settings.lang ==
-          "e" ? "Default"
-          : "默認" }}</BFormSelectOption>
+        "Topics Sort by:" : "課題排序：" }}</label>
+      <BFormSelect id="topic-sort"
+        v-model="topicSortMethod">
+        <BFormSelectOption value="">{{ settings.lang == "e"
+          ? "Default" : "默認" }}</BFormSelectOption>
         <BFormSelectOption value="hk_percent">{{
-          settings.lang
-            == "e" ?
-            "HK Percent" : "香港百分比" }}</BFormSelectOption>
+          settings.lang == "e" ? "HK Percent" : "香港百分比" }}
+        </BFormSelectOption>
+        <BFormSelectOption value="count">{{ settings.lang ==
+          "e" ? "Count" : "出現次數" }}</BFormSelectOption>
       </BFormSelect>
     </div>
     <div>
       <label for="question-sort">{{ settings.lang == "e" ?
-        "Questions Sort by:" :
-        "問題排序：" }}</label>
+        "Questions Sort by:" : "問題排序：" }}</label>
       <BFormSelect id="question-sort"
         v-model="questionSortMethod">
         <BFormSelectOption value="year">{{ settings.lang ==
-          "e" ? "Year"
-          : "年份" }}</BFormSelectOption>
+          "e" ? "Year" : "年份" }}</BFormSelectOption>
         <BFormSelectOption value="hk_percent">{{
-          settings.lang
-            == "e" ?
-            "HK Percent" : "香港百分比" }}</BFormSelectOption>
+          settings.lang == "e" ? "HK Percent" : "香港百分比" }}
+        </BFormSelectOption>
       </BFormSelect>
     </div>
   </div>
-  <div v-for="topic of topics" :key="topic.t_id">
-    <TopicQuestions :t-id="topic.t_id" :is-review="false"
-      :show-ans="false" :sort-method="questionSortMethod"
-      :topic-title="topic.t_id + '. ' + (settings.lang == 'e' ? topic.t_title : topic.t_title_c)"
-      :collapsed="true" />
+  <div>
+    <div v-for="topic of combinedResults" :key="topic.t_id">
+      <TopicQuestions :t_id="topic.t_id" :is-review="false"
+        :show-ans="false" :sort-method="questionSortMethod"
+        :topic-title="topic.t_id + '. ' + (settings.lang == 'e' ? topicTitles[topic.t_id]?.t_title : topicTitles[topic.t_id]?.t_title_c)"
+        :collapsed="true" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useSettingsStore } from '../store';
-import { Topic } from '../../type';
+import topicsJSON from '@/assets/db/topics.json';
+import { getCombinedResults } from '@/utils/calculateAverage'; // Import the function
+import type { Topic } from '../../type.d.ts';
 
 const settings = useSettingsStore();
 
-const topics = ref<Topic[]>([]);
-const topicSortMethod = ref<string>('');
-const questionSortMethod = ref<string>('year');
-const topicContainerKey = ref<number>(0);
+// Load topics and calculate combined results
+const topics = ref<Topic[]>(topicsJSON as Topic[]);
+const combinedResults = ref(getCombinedResults()); // Get combined results from the utility function
 
-const getTopics = async (): Promise<Topic[]> => {
-  const response = await fetch(`/api/topics?sort=${topicSortMethod.value}`);
-  return await response.json();
-};
-
-const updateTopicSortMethod = async () => {
-  topicContainerKey.value += 1;
-  topics.value = await getTopics();
-  console.log('topicContainerKey', topicContainerKey.value);
-};
-
-onBeforeMount(async () => {
-  topics.value = await getTopics();
+// Map topic titles for easier access
+const topicTitles = computed(() => {
+  const map: Record<number, { t_title: string; t_title_c: string }> = {};
+  topics.value.forEach((topic) => {
+    map[topic.t_id] = { t_title: topic.t_title, t_title_c: topic.t_title_c };
+  });
+  return map;
 });
 
-watch(topicSortMethod, async () => {
-  topics.value = await getTopics();
+const questionSortMethod = ref<string>('year');
+const topicSortMethod = ref<'' | 'hk_percent' | 'count'>('');
+
+watch(() => topicSortMethod.value, (newVal) => {
+  if (newVal === 'hk_percent') {
+    combinedResults.value.sort((a, b) => b.average_hk_percent - a.average_hk_percent);
+  }
+  else if (newVal === 'count') {
+    combinedResults.value.sort((a, b) => b.count - a.count);
+  } else {
+    combinedResults.value.sort((a, b) => a.t_id - b.t_id);
+  }
 });
 </script>
 

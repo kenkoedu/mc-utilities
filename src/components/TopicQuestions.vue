@@ -41,8 +41,10 @@ import { Signal, Check, ChevronDown, ChevronUp } from 'lucide-vue-next';
 import { BCard, BCardText } from 'bootstrap-vue-next';
 import { Question } from '../../type';
 
+import questionsJSON from '@/assets/db/questions.json';
+
 const props = defineProps<{
-  tId?: number | null;
+  t_id?: number | null;
   isReview?: boolean;
   showAns?: boolean;
   sortMethod?: string;
@@ -51,25 +53,33 @@ const props = defineProps<{
   year?: number;
 }>();
 
-const questions = ref<Question[]>([]);
+const questions = ref<Question[]>(questionsJSON);
+const getQuestions = async () => {
+  console.log("getQuestions")
+  let a: Question[] = questionsJSON;
+  if (props.t_id) {
+    a = questionsJSON.filter((q) => q.t_id.includes(props.t_id!));
+  }
+  if (props.year) {
+    a = questionsJSON.filter((q) => q.year === props.year);
+  }
+  let b = a.sort((a, b) => {
+    if (props.sortMethod === 'year') {
+      return a.year - b.year;
+    } else if (props.sortMethod === 'hk_percent') {
+      return (b.hk_percent || 0) - (a.hk_percent || 0);
+    }
+    return 0;
+  });
+  return b;
+};
+
 const topicTitle = ref<string | number | undefined>(props.topicTitle);
 const avgCorrectPercentage = computed(() => {
   if (questions.value.length === 0) return 0;
   const totalCorrect = questions.value.reduce((sum, q) => sum + (q.hk_percent || 0), 0);
   return (totalCorrect / questions.value.length).toFixed(2);
 });
-
-const getQuestions = async (): Promise<Question[]> => {
-  let url = '/api/questions';
-  const params = new URLSearchParams();
-  if (props.tId) params.append('t_id', props.tId.toString());
-  if (props.year) params.append('year', props.year.toString());
-  if (props.sortMethod) params.append('sort', props.sortMethod);
-  url += `?${params.toString()}`;
-
-  const response = await fetch(url);
-  return await response.json();
-};
 
 const isCollapsed = ref<boolean>(props.collapsed ?? false);
 

@@ -1,6 +1,6 @@
 t_id,t_title,t_title_c,is_junior,mia_e2
 101,Laws of indices,指數定律,true,
-102,Factoriztion / Expansion,因式分解／展開,true,
+102,Factoriztion / Expansion,因式分解 / 展開,true,
 103,Change of subjects,主項變換,true,
 104,Identites,恆等式,true,
 105,Simutaneous Equations,聯立方程,true,
@@ -23,7 +23,7 @@ t_id,t_title,t_title_c,is_junior,mia_e2
 122,Symmetry,對稱,true,
 123,Plane Geometry,平面幾何,true,
 124,Algebraic Fractions,代數分式,true,
-125,LCM / HCF of Expressions,表達式的最小公倍數／最大公因數,true,
+125,LCM / HCF of Expressions,表達式的最小公倍數 / 最大公因數,true,
 126,Centres of Triangles,三角形的中心,true,
 201,Quadratic Equations,二次方程,false,402
 202,Complex Number,複數,false,402
@@ -32,12 +32,12 @@ t_id,t_title,t_title_c,is_junior,mia_e2
 205,Function,函數,false,403
 206,Equations of Straight Lines,直線方程,false,404
 207,Transformation of Axis,坐標軸變換,false,404
-208,Factor Theorem / Remainder Theorem,因式定理／餘式定理,false,405
+208,Factor Theorem / Remainder Theorem,因式定理 / 餘式定理,false,405
 209,Logarithmic Transformation,對數變換,false,407
-210,Exponential / Logarithmic Functions,指數函數／對數函數,false,407
+210,Exponential / Logarithmic Functions,指數函數 / 對數函數,false,407
 211,Variation,變分,false,409
 212,Trigonometry + Algebra,三角學 + 代數,false,410
-213,Properties of Circles / Tangents,圓的性質／切線,false,502
+213,Properties of Circles / Tangents,圓的性質/切線,false,502
 214,Linear Inequalities,線性不等式,false,503
 215,Linear Programming,線性規劃,false,504
 216,Trigonometry of 2D Figures,二維圖形的三角學,false,505
@@ -49,6 +49,6 @@ t_id,t_title,t_title_c,is_junior,mia_e2
 222,Effects on Changes of Distribution,分布改變的影響,false,509
 223,Permutation and Combination,排列與組合,false,510
 224,Probabilties (Senior Forms),概率（高中）,false,511
-225,Arithmetic Sequence / Geometric Sequence,等差數列／等比數列,false,602
+225,Arithmetic Sequence / Geometric Sequence,等差數列 / 等比數列,false,602
 226,Transformation of Function,函數變換,false,604
 227,Discriminant Δ,判別式 Δ,false,402

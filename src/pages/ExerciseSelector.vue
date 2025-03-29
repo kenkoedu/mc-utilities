@@ -49,10 +49,7 @@
       <BCol cols="3">Date: __________</BCol>
     </BRow>
     <div v-for="(topic, i) of topicsSelected" :key="i">
-      <!-- <h5 style="page-break-after: avoid;">
-        {{ topic.text }}
-      </h5> -->
-      <TopicQuestions :t-id="topic.value" :is-review="false"
+      <TopicQuestions :t_id="topic.value" :is-review="false"
         :show-ans="false" :sort-method="sortMethod"
         :topicTitle="topic.text"
         :key="topicsSelected.length + sortMethod" />
@@ -61,14 +58,15 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref, computed } from 'vue';
+import { ref, computed } from 'vue';
 import VueMultiselect from 'vue-multiselect';
-import { useSettingsStore } from '../store';
+import { useSettingsStore } from '@/store'; // Updated import
 import { Topic } from '../../type';
+import topicsJSON from '@/assets/db/topics.json';
 
 const settings = useSettingsStore();
 
-const topics = ref<Topic[]>([]);
+const topics = ref<Topic[]>(topicsJSON as Topic[]);
 const options = computed(() =>
   topics.value.map((a) => ({
     value: a.t_id,
@@ -77,17 +75,6 @@ const options = computed(() =>
 );
 const topicsSelected = ref<{ value: number, text: string }[]>([]);
 
-const getTopics = async (): Promise<Topic[]> => {
-  const response = await fetch('/api/topics');
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return await response.json();
-};
-
-onBeforeMount(async () => {
-  topics.value = await getTopics();
-});
 
 const exName = ref<string>('');
 const instructions = ref<string>('');

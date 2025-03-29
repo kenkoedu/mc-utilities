@@ -15,17 +15,14 @@
 <script setup lang="ts">
 import { onBeforeMount, ref } from 'vue';
 import { useSettingsStore } from '../store';
-import { Question } from '../../type';
-
+import questionsJSON from '@/assets/db/questions.json';
 const settings = useSettingsStore();
 
 const years = ref<number[]>([]);
 const sortMethod = ref<string>('year');
 
-const getYears = async (): Promise<number[]> => {
-  const response = await fetch('/api/questions');
-  const data: Question[] = await response.json();
-  return [...new Set(data.map((q) => q.year))].sort((a, b) => b - a);
+const getYears = (): number[] => {
+  return [...new Set(questionsJSON.map((q) => q.year))].sort((a, b) => b - a);
 };
 
 onBeforeMount(async () => {

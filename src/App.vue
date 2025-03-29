@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import ByTopic from './pages/ByTopic.vue';
-import Navbar from './components/Navbar.vue';
+import Navbar from '@/components/Navbar.vue'; // Updated import
 // import ExerciseSelector from './pages/ExerciseSelector.vue';
 
 </script>

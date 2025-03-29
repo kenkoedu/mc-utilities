@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore } from '../store';
+import { useSettingsStore } from '@/store';
 import { ref, computed } from 'vue';
 // import { ListIcon, PencilIcon, DatabaseIcon, GlobeIcon, Calendar } from 'lucide-vue-next';
 import { ListIcon, PencilIcon, GlobeIcon, Calendar } from 'lucide-vue-next';

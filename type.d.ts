@@ -10,7 +10,7 @@ export interface Topic {
 // Type for questions
 export interface Question {
   q_id: number;
-  t_id: number;
+  t_id: number[];
   year: number;
   q_num: number;
   ans: string;
