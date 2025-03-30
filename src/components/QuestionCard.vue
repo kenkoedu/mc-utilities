@@ -2,9 +2,10 @@
   <BCard :key="question.id" class="question-card">
     <BCardBody>
       <BContainer fluid>
-        <div class="d-flex">
-          <h6 class="align-self-start">{{ i + 1 }}.</h6>
-          <div class="ms-3 flex-grow-1">
+        <div
+          class="d-flex flex-column flex-md-row align-items-start">
+          <h6>{{ i + 1 }}. </h6>
+          <div class="mx-3">
             <!-- Show text if available and hasImage is false, otherwise show the image -->
             <div
               v-if="questionText && !questionDetails.hasImage && settings.lang === 'c'"
@@ -31,32 +32,45 @@
                   </li>
                 </ol>
               </div>
-
             </div>
+
             <BImg v-else
               :src="getImgUrl(question.q_id.toString(), settings.lang)"
-              fluid class="question-image" />
+              class="question-image" />
           </div>
-          <div>
-            <BButton variant="outline-secondary"
-              class="mx-1">
-              <Calendar class="icon" />
-              {{ question.year }}
+          <div
+            class="d-flex flex-md-column flex-sm-row align-items-end justify-content-between ms-auto align-self-end">
+            <BButton pill variant="outline-secondary"
+              class="mb-1">
+              <div
+                style="display: block; white-space: nowrap;">
+                <Calendar class="icon" />
+                {{ question.year }}
+              </div>
             </BButton>
-            <BButton variant="outline-secondary"
-              class="mx-1">
-              <HelpCircle class="icon" />
-              Q{{ question.q_num }}
+            <BButton pill variant="outline-secondary"
+              class="mb-1">
+              <div
+                style="display: block; white-space: nowrap;">
+                <HelpCircle class="icon" />
+                Q{{ question.q_num }}
+              </div>
             </BButton>
-            <BButton v-if="settings.showHKPercent"
-              variant="outline-secondary" class="mx-1">
-              <Flag class="icon" />
-              {{ question.hk_percent }}%
+            <BButton pill v-if="settings.showHKPercent"
+              variant="outline-secondary" class="mb-1">
+              <div
+                style="display: block; white-space: nowrap;">
+                <Flag class="icon" />
+                {{ question.hk_percent }}%
+              </div>
             </BButton>
-            <BButton v-if="settings.showAns"
-              variant="outline-secondary" class="mx-1">
-              <Check class="icon" />
-              {{ question.ans }}
+            <BButton pill v-if="settings.showAns"
+              variant="outline-secondary" class="mb-1">
+              <div
+                style="display: block; white-space: nowrap;">
+                <Check class="icon" />
+                {{ question.ans }}
+              </div>
             </BButton>
           </div>
         </div>
@@ -91,17 +105,20 @@ const questionText = computed(() => questionDetails.value?.qText || null);
 
 <style scoped>
 .question-image {
-  min-width: 720px;
-  border-radius: 4px;
+  min-width: 500px;
+  width: 100%;
+  max-width: 720px;
 }
 
 .question-text {
   font-size: 1rem;
   line-height: 1.5;
+  white-space: pre-line;
 }
 
-.icon {
-  width: 16px;
-  height: 16px;
+@media (max-width: 768px) {
+  .question-text {
+    font-size: 0.9rem;
+  }
 }
 </style>

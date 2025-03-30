@@ -16,7 +16,7 @@ const text = ref(props.text)
 // console.log(text.value);
 onMounted(() => {
   let textContent = text.value;
-  const regexp = /\$(.+?)\$/g;
+  const regexp = /\@\@(.+?)\#\#/g;
   text.value = textContent.replaceAll(regexp, function (_match, p1) {
     const strTobeRendered = p1.replaceAll("\\frac", "\\dfrac");
     const rendered = katex.renderToString(strTobeRendered, {
@@ -24,7 +24,7 @@ onMounted(() => {
       displayMode: false,
       errorColor: '#000000',
     })
-    return `  ${rendered}  `.replaceAll("$$", "$");
+    return `  ${rendered}  `.replaceAll(`<span class="katex">`, `<span class="katex" style="display: inline-block; vertical-align: middle;">`);
   });
 })
 
@@ -32,13 +32,9 @@ onMounted(() => {
 
 <style scoped>
 * {
-  font-family: "Noto Serif HK", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
+  font-family: "Times New Roman", "Noto Serif HK", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif !important;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-}
-
-.katex {
-  display: inline-block;
 }
 </style>

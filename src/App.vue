@@ -30,5 +30,13 @@ import Navbar from '@/components/Navbar.vue'; // Updated import
     padding: 0 1rem;
   }
 }
+
+@page {
+  size::after {
+    content: "A4";
+  }
+
+  margin: 0;
+}
 </style>
 <style scoped></style>
