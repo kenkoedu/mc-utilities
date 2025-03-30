@@ -13,12 +13,12 @@
               <p>
                 <Katex :text="questionText" />
               </p>
-              <div class="ps-2 pt-3">
-                <ol v-if="questionDetails?.isStatements"
-                  type="I">
+              <div v-if="questionDetails?.isStatements"
+                class="ps-2 pt-2">
+                <ol type="I">
                   <li
                     v-for="(statement, index) in questionDetails.statements"
-                    :key="index" class="mb-3">
+                    :key="index" class="pb-2">
                     <Katex :text="statement" />
                   </li>
                 </ol>
@@ -27,7 +27,7 @@
                 <ol type="A">
                   <li
                     v-for="(choice, index) in questionDetails.choices"
-                    :key="index" class="mb-3">
+                    :key="index" class="pb-3">
                     <Katex :text="choice" />
                   </li>
                 </ol>
