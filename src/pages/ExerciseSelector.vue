@@ -48,7 +48,8 @@
       </BCol>
       <BCol cols="3">Date: __________</BCol>
     </BRow>
-    <div v-for="(topic, i) of topicsSelected" :key="i">
+    <div v-for="(topic, i) of topicsSelected" :key="i"
+      class="mb-2">
       <TopicQuestions :t_id="topic.value" :is-review="false"
         :show-ans="false" :sort-method="sortMethod"
         :topicTitle="topic.text"

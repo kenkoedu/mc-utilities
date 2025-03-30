@@ -121,4 +121,11 @@ const questionText = computed(() => questionDetails.value?.qText || null);
     font-size: 0.9rem;
   }
 }
+
+/* Ensure QuestionCard starts on a new page if it doesn't fit */
+@media print {
+  .question-card {
+    page-break-inside: avoid;
+  }
+}
 </style>

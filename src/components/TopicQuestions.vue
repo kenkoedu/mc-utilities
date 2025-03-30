@@ -4,25 +4,31 @@
       <BCard>
         <BCardText>
           <div class="d-flex">
-            <h3 class="flex-grow-1 mx-1">{{ topicTitle ||
+            <h4 class="flex-grow-1 mx-1">{{ topicTitle ||
               year }}
-            </h3>
-            <BButton v-if="!year" class="mx-1"
-              variant="outline-secondary" pill size="lg">
-              <Signal />
-              出現次數：{{ questions.length }}
-            </BButton>
-            <BButton class="mx-1"
-              variant="outline-secondary" size="lg" pill>
-              <Check />
-              各題平均：{{ avgCorrectPercentage }}%
-            </BButton>
-            <BButton class="mx-1"
+            </h4>
+            <div class="d-flex flex-md-column flex-lg-row">
+              <BButton v-if="!year" class="mx-1"
+                variant="outline-secondary" pill>
+                <Signal />
+                {{ settings.lang === 'c' ? '出現次數：' :
+                  'Frequency: ' }} {{ questions.length
+                }}
+              </BButton>
+              <BButton class="mx-1"
+                variant="outline-secondary" pill>
+                <Check />
+                {{ settings.lang === 'c' ? '各題平均：' :
+                  'Average: ' }} {{ avgCorrectPercentage }}%
+              </BButton>
+            </div>
+            <BButton class="mx-1 no-print"
               variant="outline-secondary" size="lg"
               @click="isCollapsed = !isCollapsed">
               <ChevronDown v-if="!isCollapsed" />
               <ChevronUp v-else />
             </BButton>
+
           </div>
         </BCardText>
       </BCard>
@@ -38,10 +44,12 @@
 <script setup lang="ts">
 import { ref, onBeforeMount, watch, computed } from 'vue';
 import { Signal, Check, ChevronDown, ChevronUp } from 'lucide-vue-next';
+import { useSettingsStore } from '../store';
 import { BCard, BCardText } from 'bootstrap-vue-next';
 import { Question } from '../../type';
 
 import questionsJSON from '@/assets/db/questions.json';
+const settings = useSettingsStore();
 
 const props = defineProps<{
   t_id?: number | null;
