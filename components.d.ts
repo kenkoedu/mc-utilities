@@ -37,6 +37,7 @@ declare module 'vue' {
     QuestionCard: typeof import('./src/components/QuestionCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TKIZ: typeof import('./src/components/TKIZ.vue')['default']
     TopicQuestions: typeof import('./src/components/TopicQuestions.vue')['default']
   }
 }

@@ -6,6 +6,7 @@ import Navbar from '@/components/Navbar.vue'; // Updated import
 </script>
 
 <template>
+  <!-- <TKIZ></TKIZ> -->
   <Navbar class="no-print"></Navbar>
   <BContainer fluid class="main-container">
     <RouterView></RouterView>
